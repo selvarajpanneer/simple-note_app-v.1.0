@@ -10,11 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TimePicker;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.Calendar;
+import java.util.concurrent.Executor;
 
 
 public class InputSection extends AppCompatActivity {
@@ -25,9 +24,10 @@ public class InputSection extends AppCompatActivity {
     String title, content;
     String Alarmtime = null;
     int slno;
+    Executor executor;
     //sql instantiation to handle db
-    SqlHelper inputdbHelper = new SqlHelper(InputSection.this);
-
+    SqlHelper inputdbHelper = new SqlHelper(this, executor);
+//    SqlHelper inputdbHelper = new SqlHelper(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,9 +90,9 @@ public class InputSection extends AppCompatActivity {
             if (!content.isEmpty()) {
                 String creation_time = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
                 if (slno != 0) {//update alarmtime in existing rows of notes
-                    inputdbHelper.updateNotes(slno, title, content, Alarmtime);
+                    //  need to write code for perform db operation using non ui thread
                 } else {//create new row in notes with alarmtime
-                    inputdbHelper.addNotes(title, content, creation_time, Alarmtime);
+                    //   need to write code for perform db operation using non ui thread
                 }
             } else {
                 Log.d(TAG, "INPUTSECTION notes: content is empty");

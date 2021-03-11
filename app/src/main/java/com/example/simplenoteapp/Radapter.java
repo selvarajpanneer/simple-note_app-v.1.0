@@ -7,17 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 
 public class Radapter extends RecyclerView.Adapter<Radapter.ViewHolder> {
     private static final String TAG = "ADAPTER";
-    private static final int MODE_PRIVATE = 0;
-
     private ArrayList<Notes> mNoteList;
     private Context rContext;
 
@@ -57,10 +53,10 @@ public class Radapter extends RecyclerView.Adapter<Radapter.ViewHolder> {
         String content = nl.getContent();
         String c_time = nl.getCreation_time();
         Long l_time = nl.getLast_modified_time();
-        String t = checkTimePeriod(l_time);
+        //String t = checkTimePeriod(l_time);
         holder.textView1.setText(title);
         holder.textView2.setText(content);
-        holder.textView3.setText(t);
+       // holder.textView3.setText(t);
         holder.textView4.setText(c_time);
 
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
@@ -74,29 +70,6 @@ public class Radapter extends RecyclerView.Adapter<Radapter.ViewHolder> {
 
             }
         });
-    }
-
-    public String checkTimePeriod(Long time) {
-        long milliseconds1 = time;
-        long milliseconds2 = System.currentTimeMillis();
-        long diff = milliseconds2 - milliseconds1;
-        long seconds = diff / 1000;
-        long minutes = diff / (60 * 1000);
-        long hours = diff / (60 * 60 * 1000);
-        long days = diff / (24 * 60 * 60 * 1000);
-        if (seconds < 60) {
-            String sec = seconds + " sec";
-            return sec;
-        } else if (minutes < 60) {
-            String min = minutes + " min";
-            return min;
-        } else if (hours < 24) {
-            String hr = hours + " hr";
-            return hr;
-        } else {
-            String day = days + " D";
-            return day;
-        }
     }
 
     @Override

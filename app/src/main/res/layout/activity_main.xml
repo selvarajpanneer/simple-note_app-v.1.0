@@ -4,20 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SimpleNote"
-    android:background="@drawable/rectangle_shape">
-<androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="vertical">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view"
-        android:layout_width="match_parent"
+    android:background="@drawable/rectangle_shape"
+    tools:context=".SimpleNote">
+
+    <ProgressBar
+        android:id="@+id/progressBar_cyclic"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        />
-</androidx.core.widget.NestedScrollView>
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/circularprogressbar"
+        android:minWidth="50dp"
+        android:minHeight="50dp" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp" />
+    </androidx.core.widget.NestedScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -28,7 +42,6 @@
         android:layout_marginRight="40dp"
         android:layout_marginBottom="75dp"
         android:src="@drawable/ic_baseline_note_add_24"
-        app:fabSize="normal"
-       />
+        app:fabSize="normal" />
 
 </RelativeLayout>

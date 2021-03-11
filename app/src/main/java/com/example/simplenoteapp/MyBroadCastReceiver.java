@@ -7,9 +7,13 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
+import java.util.concurrent.Executor;
+
+
 public class MyBroadCastReceiver extends BroadcastReceiver {
 
     private SqlHelper dpHelper;
+    Executor executor;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -26,16 +30,16 @@ public class MyBroadCastReceiver extends BroadcastReceiver {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 intent2, PendingIntent.FLAG_UPDATE_CURRENT);
         nb.setContentIntent(contentIntent);
-
         notificationHelper.getManager().notify(1, nb.build());
         //sql instantiation to handle db
-        getdbHelper(context).deactivateAlarm(serial_no);
-
+       // getdbHelper(context).deactivate_Alarm(serial_no);
+        // need to write code for perform db operation using non ui thread
     }
 
     public SqlHelper getdbHelper(Context context) {
         if (dpHelper == null) {
-            dpHelper = new SqlHelper(context);
+            dpHelper = new SqlHelper(context, executor);
+//            dpHelper = new SqlHelper(context);
         }
         return dpHelper;
     }
