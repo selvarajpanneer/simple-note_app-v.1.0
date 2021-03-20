@@ -74,10 +74,10 @@ public class Radapter extends RecyclerView.Adapter<Radapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (mNoteList != null) {
-            Log.d(TAG, "getItemCount: mNoteList not null");
+////        if (mNoteList != null) {
+////            Log.d(TAG, "getItemCount: mNoteList not null");
             return mNoteList.size();
-        } else
-            return 0;
+//        } else
+//            return 0;
     }
 }

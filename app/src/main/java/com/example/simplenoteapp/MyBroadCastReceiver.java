@@ -44,6 +44,7 @@ public class MyBroadCastReceiver extends BroadcastReceiver {
         }
         return dpHelper;
     }
+    //last work bending need to do later
 private class PerformDbOp extends AsyncTask<String, Void, Boolean> {
 
     @Override

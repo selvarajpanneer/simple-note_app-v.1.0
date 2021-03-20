@@ -40,7 +40,7 @@ public class SimpleNote extends AppCompatActivity implements AsyncTaskHelp {
     ArrayList<Notes> alarmList;
     boolean loaded = false;
     Executor executor;
-//    ExecutorService executorService= Executors.newFixedThreadPool(4);
+    //    ExecutorService executorService= Executors.newFixedThreadPool(4);
 //    Handler mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     //for alarm
     int alarm_result;
@@ -50,7 +50,7 @@ public class SimpleNote extends AppCompatActivity implements AsyncTaskHelp {
     Delete_Task deleteTask;
     DeleteOperation deleteOperation;
     AlertDialog.Builder alertDialog;
-
+    int position, serialnum;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -72,7 +72,6 @@ public class SimpleNote extends AppCompatActivity implements AsyncTaskHelp {
         Intent create_intent = new Intent(SimpleNote.this, InputSection.class);
         recyclerView_View.setAlpha(0);
         startActivityForResult(create_intent, LAUNCH_SECOND_ACTIVITY);
-
     }
 
     @Override
@@ -134,15 +133,16 @@ public class SimpleNote extends AppCompatActivity implements AsyncTaskHelp {
                                 .setMessage("You are about to delete this note, please confirm")
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        int position = viewHolder.getAdapterPosition();
+                                        Log.d(TAG, "onClick: " + which);
+                                        position = viewHolder.getAdapterPosition();
                                         Notes delete_file = notes.get(position);
-                                        progressBar.setVisibility(View.VISIBLE);
-                                        deletenotes(position);
+                                        Log.d(TAG, "onClick: position of arraylist " + position);
+                                        serialnum = delete_file.getSlno();
+                                        deletenotes(serialnum);
                                     }
                                 })
                                 .setNegativeButton("CANCEL", null)
                                 .show();
-                        recyclerView_Adapter.notifyDataSetChanged();
                     }
                 };
 //        //using  fab to add new notes to list
@@ -153,11 +153,9 @@ public class SimpleNote extends AppCompatActivity implements AsyncTaskHelp {
         mFloatingActionButton.setOnClickListener(v -> addItem());
     }
 
-    public void deletenotes(int position) {
-//        progressBar.setVisibility(View.VISIBLE);
-        //new DeleteOperation(this, SimpleNote.this).del(position);
-//        new DeleteOperation(executor,context,mainThreadHandler).delete();
-        recyclerView_Adapter.notifyItemRemoved(position);
+    public void deletenotes(int serial_num) {
+        progressBar.setVisibility(View.VISIBLE);
+        new DeleteOperation(this, SimpleNote.this).del(serial_num);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -190,6 +188,16 @@ public class SimpleNote extends AppCompatActivity implements AsyncTaskHelp {
                 }
             }
         }
+    }
+
+    @Override
+    public void deletTask1(ArrayList<Notes> al) {
+        Log.d(TAG, "deletTask1: is get in");
+        progressBar.setVisibility(View.GONE);
+        recyclerView_View.removeViewAt(position);
+        recyclerView_Adapter.notifyItemRemoved(position);
+        recyclerView_Adapter.notifyItemRangeChanged(position, loadNotesList.size());
+        getList(al);
     }
 }
 

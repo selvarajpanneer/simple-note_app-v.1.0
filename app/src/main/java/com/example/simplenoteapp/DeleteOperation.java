@@ -12,45 +12,33 @@ import java.util.ArrayList;
 import java.util.concurrent.Executor;
 
 public class DeleteOperation {
-    private final Executor executor;
+//    private final Executor executor;
     Context context;
     Handler handler;
     AsyncTaskHelp asyncTaskHelp;
     int  s;
     ArrayList<Notes> notes;
     SimpleNote simpleNote = new SimpleNote();
-//    public DeleteOperation(AsyncTaskHelp asyncTaskHelp, Context context){
-//        this.asyncTaskHelp =asyncTaskHelp;
-//        this.context=context;
-//    }
-    public DeleteOperation(Executor executor, Context context, Handler handler){
-        this.executor=executor;
+    public DeleteOperation(AsyncTaskHelp asyncTaskHelp, Context context){
+        this.asyncTaskHelp =asyncTaskHelp;
         this.context=context;
-        this.handler=handler;
     }
-    public void delete(int no){
-        executor.execute(new Runnable() {
-            @Override
+
+    public void del(int slno){
+        new Thread()
+        {
             public void run() {
-                new SqlHelper(context).delete_Notes(s);
+                notes= new SqlHelper(context).delete_Notes(slno);
+                simpleNote.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        asyncTaskHelp.deletTask1(notes);
+                    }
+                });
             }
-        });
+
+        }.start();
     }
-//    public void del(int slno){
-//        new Thread()
-//        {
-//            public void run() {
-//                s= new SqlHelper(context).delete_Notes(slno);
-////                simpleNote.runOnUiThread(new Runnable() {
-////                    @Override
-////                    public void run() {
-//////                        asyncTaskHelp.deletTask1(s);
-////                    }
-////                });
-//            }
-//
-//        }.start();
-//    }
     }
 
 

@@ -58,7 +58,7 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     //create noteslist for recyclerview
     public ArrayList<Notes> list_Notes() {
-        final String sql = "select * from " + NotesContract.NotesEntry.TABLE_NAME + " WHERE " + NotesContract.NotesEntry.DELETE_FLAG + "= 0" + "  ORDER BY " + NotesContract.NotesEntry.LAST_MODIFIED_TIME;
+        final String sql = "select * from " + NotesContract.NotesEntry.TABLE_NAME + " WHERE " + NotesContract.NotesEntry.DELETE_FLAG + "= 0 " + "  ORDER BY " + NotesContract.NotesEntry.LAST_MODIFIED_TIME;
         final ArrayList<Notes> storeNotes = new ArrayList<>();
         final SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
@@ -145,12 +145,13 @@ public class SqlHelper extends SQLiteOpenHelper {
     }
 
     //delete notes based on serial no just
-    public Integer delete_Notes(int slno) {
+    public ArrayList<Notes> delete_Notes(int slno) {
         final SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE " + NotesContract.NotesEntry.TABLE_NAME + " SET " + NotesContract.NotesEntry.DELETE_FLAG + "= 1" + " WHERE Serial_No = " + slno);
         db.close();
         Log.d(TAG, "deleteNotes: notes deleted");
-        return slno;
+        ArrayList<Notes> al = list_Notes();
+        return  al;
     }
 
     //cancel reminder Alarm
