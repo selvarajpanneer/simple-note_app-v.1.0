@@ -2,11 +2,8 @@ package com.example.simplenoteapp;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,14 +18,7 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.simplenoteapp.util.AddOrUpdateOperation;
-import com.example.simplenoteapp.util.AsyncTaskAddOrUpdate;
-import com.example.simplenoteapp.util.AsyncTaskHelp;
-import com.example.simplenoteapp.util.ListOperation;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.ExecutorService;
 
 
 public class InputSection extends AppCompatActivity implements AsyncTaskAddOrUpdate {

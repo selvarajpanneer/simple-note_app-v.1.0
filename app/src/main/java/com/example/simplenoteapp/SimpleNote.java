@@ -2,7 +2,6 @@ package com.example.simplenoteapp;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.os.HandlerCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,24 +15,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.example.simplenoteapp.util.AlarmOperation;
-import com.example.simplenoteapp.util.AsyncTaskHelp;
-import com.example.simplenoteapp.util.DeleteOperation;
-import com.example.simplenoteapp.util.Delete_Task;
-import com.example.simplenoteapp.util.ListOperation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 public class SimpleNote extends AppCompatActivity implements AsyncTaskHelp {
