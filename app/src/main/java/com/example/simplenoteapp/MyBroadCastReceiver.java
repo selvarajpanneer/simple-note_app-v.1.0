@@ -4,21 +4,24 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
+import android.os.AsyncTask;
+import android.os.Build;
+import android.util.Log;
 import androidx.core.app.NotificationCompat;
 
-import java.util.concurrent.Executor;
 
 
 public class MyBroadCastReceiver extends BroadcastReceiver {
 
+    private static final String TAG = "Broadcast receiver";
     private SqlHelper dpHelper;
-    Executor executor;
-
+    Context broadcast_context;
+    int serial_no;
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent intent1 = intent;
-        int serial_no = intent1.getIntExtra("notification_slno", 0);
+        broadcast_context=context;
+        serial_no = intent1.getIntExtra("notification_slno", 0);
         String title = intent1.getStringExtra("notification_title");
         String content = intent1.getStringExtra("notification_content");
         NotificationService notificationHelper = new NotificationService(context);
@@ -31,16 +34,33 @@ public class MyBroadCastReceiver extends BroadcastReceiver {
                 intent2, PendingIntent.FLAG_UPDATE_CURRENT);
         nb.setContentIntent(contentIntent);
         notificationHelper.getManager().notify(1, nb.build());
-        //sql instantiation to handle db
-       // getdbHelper(context).deactivate_Alarm(serial_no);
-        // need to write code for perform db operation using non ui thread
+        //db operation using asynctask
+        new PerformDbOp().execute(new String[]{});
     }
 
-    public SqlHelper getdbHelper(Context context) {
+    public SqlHelper getDpHelper(Context context) {
         if (dpHelper == null) {
-            dpHelper = new SqlHelper(context, executor);
-//            dpHelper = new SqlHelper(context);
+            dpHelper = new SqlHelper(context);
         }
         return dpHelper;
     }
+private class PerformDbOp extends AsyncTask<String, Void, Boolean> {
+
+    @Override
+    protected Boolean doInBackground(String... strings) {
+        Boolean flag =getDpHelper(broadcast_context).deactivate_Alarm(serial_no);
+        return flag;
+    }
+
+    @Override
+    protected void onPostExecute(Boolean flag) {
+        Boolean flag_success=flag;
+        if(flag_success==true){
+            Log.d(TAG, "onPostExecute: "+flag_success);
+        }
+        else {
+            Log.d(TAG, "onPostExecute: "+flag_success);
+        }
+    }
+}
 }
